@@ -2,13 +2,13 @@
 @section('title') {{$title}} @endsection
 
 @section('content')
-	
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-        	
+
         	<div class="row">
-        		<div class="col-md-6">			
+        		<div class="col-md-6">
 		        	<form action="{{route('contact.index')}}" class="mt-2 mb-3">
 		        		<div class="input-group">
 		        			<input
@@ -65,7 +65,7 @@
 						 <th><b>Phone</b></th>
 						 <th><b>Category</b></th>
 						 <th><b>Message</b></th>
-						 <th><b>Country</b></th>
+						 <th><b>Province</b></th>
 						 <th><b>City</b></th>
 						 <th><b>Ip Address</b></th>
 						 <th><b>Actions</b></th>
