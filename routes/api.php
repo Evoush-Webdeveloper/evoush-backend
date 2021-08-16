@@ -8,6 +8,7 @@ use App\Http\Controllers\ApiDataController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\MetaDataController;
 use App\Http\Controllers\RajaOngkirController;
+use App\Http\Controllers\SendMailController;
 // use App\Http\Controllers\CategoryMessageController;
 
 
@@ -18,6 +19,8 @@ Route::middleware(['cors'])->group(function(){
 	Route::resource('/test/data', ApiDataController::class);
 });
 
+// sending email
+Route::post('/evoush/kirim-email', [SendMailController::class, 'send']);
 
 
 // new member join

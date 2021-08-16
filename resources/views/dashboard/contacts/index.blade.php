@@ -62,6 +62,7 @@
 						 <tr>
 						 <th><b>Name</b></th>
 						 <th><b>Email</b></th>
+						 <th><b>Username</b></th>
 						 <th><b>Phone</b></th>
 						 <th><b>Category</b></th>
 						 <th><b>Message</b></th>
@@ -76,6 +77,7 @@
 						 <tr>
 						 <td>{{$contact->name}}</td>
 						 <td>{{$contact->email}}</td>
+						 <td>{{$contact->username}}</td>
 						 <td>{{$contact->phone}}</td>
 						 <td>
 						 	{{$contact->category_name}}
