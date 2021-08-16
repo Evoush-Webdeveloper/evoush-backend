@@ -26,7 +26,11 @@ class EventEmail extends Mailable
         ];
         // return $this->subject('Event Anniversary Evoush 2021')
         //             ->view('dashboard.emails.eventEmail', $context);
-        return $this->markdown('dashboard.emails.eventEmail')
-              ->with('details', $this->details);
+        return $this->subject('Event Anniversary Evoush 2021')
+                ->view('dashboard.emails.eventEmail')
+                ->with('details', $this->details);
+
+        // return $this->markdown('dashboard.emails.eventEmail')
+        //       ->with('details', $this->details);
     }
 }
