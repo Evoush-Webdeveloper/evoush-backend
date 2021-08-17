@@ -64,7 +64,7 @@ class SendMailController extends Controller
 
         try {
 
-            Mail::to('admin_evoush@evoush.com')->send(new EventEmail($details));
+            Mail::to('evoushofficiall@gmail.com')->send(new EventEmail($details));
             return response()->json([
             	'message' => 'Email has been sent.',
             	'data' => $new_contact

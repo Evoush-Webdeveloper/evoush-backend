@@ -609,5 +609,13 @@ class ApiDataController extends Controller
 
     }
 
+    public function contact_message(){
+        $contacts = Contact::get();
+        return response()->json([
+            'message' => 'Contact Massage Evoush',
+            'data' => $contacts
+        ]);
+    }
+
 
 }
