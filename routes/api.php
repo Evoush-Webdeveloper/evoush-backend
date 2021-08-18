@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\MetaDataController;
 use App\Http\Controllers\RajaOngkirController;
 use App\Http\Controllers\SendMailController;
+use App\Http\Controllers\EmailNotificationNewMember;
 // use App\Http\Controllers\CategoryMessageController;
 
 
@@ -25,7 +26,7 @@ Route::post('/evoush/kirim-email', [SendMailController::class, 'send']);
 
 // new member join
 Route::post('/member/new-join', [ApiDataController::class, 'store_new_member']);
-
+Route::post('/member/activation', [EmailNotificationNewMember::class, 'send']);
 // profile update
 // Route::resource('/profile', ProfileController::class);
 Route::post('/member/update/avatar/{id}', [ApiDataController::class, 'update_avatar']);
