@@ -148,6 +148,8 @@ class ApiDataController extends Controller
 
         $username_path = $request->get('username_path');
 
+        // return response()->json(['data' => $username_path]);
+
         $new_user = new User;
         $new_user->name = strtolower($request->get('name'));
         $new_user->email = $request->get('email');
@@ -188,13 +190,22 @@ class ApiDataController extends Controller
         $new_member->sponsor_id = $request->get('sponsor_id');
         $new_member->save();
 
+        // $sponsor = User::join('profile', 'users.id', '=', 'profile.user_id')
+        // ->where("roles", "=", json_encode("MEMBER"))
+        // ->where("users.id", "=", $new_member->sponsor_id)
+        // ->get(['profile.*', 'users.*']);
+
+        // var_dump($sponsor); die;
+
         $new_join = new Joining;
         // $new_join->username = $new_username;
         $new_join->member_id = $new_member->id;
         $new_join->user_id = $new_member->user_id;
         $new_join->save();
 
-         return response()->json(['message' => $new_user->username.' berhasil join member baru, selanjutnya klik tombol aktivasi akun.']);
+
+
+        return response()->json(['message' => '<b class="text-primary">'.$new_user->username.'</b> berhasil join member baru, dari sponsor <b class="text-info">'.$username_path.'</b> selanjutnya klik tombol aktivasi akun dibawah ini.', 'data' => $new_user]);
 
         // if($new_join->count() > 0){
         //     // return redirect()->route('member.username', [$username_path])->with('status', 'Username anda : '.$new_user->username.' berhasil dibuat selanjutnya system kami akan memproses setelah pihak sponsor mengaktivasi akun member anda.');

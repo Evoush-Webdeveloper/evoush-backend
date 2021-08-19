@@ -85,13 +85,14 @@ class EmailNotificationNewMember extends Controller
 
             Mail::to('admin_evoush@evoush.com')->send(new ActivationNewMemberMail($details));
             return response()->json([
-            	'message' => 'Email has been sent.',
-            	'data' => $sponsor
+            	'message' => '<b class="text-info">'.$new_user->username.'</b> proses join anda sudah dikirim ke pihak sponsor <b class="text-primary">'.$sponsor[0]->username.',</b> untuk selanjutnya menunggu  di aktivasi oleh sponsor anda.',
+            	'data_sponsor' => $sponsor,
+                'data_member' => $new_user
             ], Response::HTTP_OK);
 
 
 
- 
+
         } catch(\Exception $e){
             echo "Email gagal dikirim karena $e.";
         }
