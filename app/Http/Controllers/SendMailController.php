@@ -14,25 +14,25 @@ class SendMailController extends Controller
     //
      public function send(Request $request)
     {
-    	// $validation = Validator::make($request->all(),[
-    	// 	"name" => "required|min:5|max:100",
-    	// 	"phone" => "required|digits_between:10,12",
-    	// ])->validate();
+        // $validation = Validator::make($request->all(),[
+        //  "name" => "required|min:5|max:100",
+        //  "phone" => "required|digits_between:10,12",
+        // ])->validate();
 
-    	// if ($validation->fails()) {
+        // if ($validation->fails()) {
      //        return response()->json($validation->errors(), 400);
      //    }
-    	$no_peserta = $request->get('no_peserta');
-    	$name = $request->get('name');
-    	$username = $request->get('username');
-    	$phone = $request->get('phone');
-    	$subject = $request->get('subject');
-    	$category = $request->get('category');
-    	$province = $request->get('province');
-    	$city = $request->get('city');
+        $no_peserta = $request->get('no_peserta');
+        $name = $request->get('name');
+        $username = $request->get('username');
+        $phone = $request->get('phone');
+        $subject = $request->get('subject');
+        $category = $request->get('category');
+        $province = $request->get('province');
+        $city = $request->get('city');
 
-        
- 
+
+
         $new_contact = new Contact;
         $new_contact->name = $name;
         $new_contact->email = null;
@@ -66,13 +66,13 @@ class SendMailController extends Controller
 
             Mail::to('evoushofficiall@gmail.com')->send(new EventEmail($details));
             return response()->json([
-            	'message' => 'Email has been sent.',
-            	'data' => $new_contact
+                'message' => 'Email has been sent.',
+                'data' => $new_contact
             ], Response::HTTP_OK);
 
 
 
- 
+
         } catch(\Exception $e){
             echo "Email gagal dikirim karena $e.";
         }
@@ -83,6 +83,6 @@ class SendMailController extends Controller
         // ];
         // \Mail::to($email)->send(new EventEmail($data));
         // return 'Berhasil mengirim email!';
-         
+
     }
 }

@@ -425,7 +425,7 @@ class ApiDataController extends Controller
     {
         $members = User::join('profile', 'profile.user_id', '=', 'users.id')
                     ->where('roles', '=', json_encode(['MEMBER']))
-                    ->whereIn('users.id', [3, 4, 5, 8, 9, 11, 12, 13, 14, 15, 16, 18])
+                    ->whereIn('users.id', [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18])
                     // ->get();
                     ->paginate(6);
 
@@ -628,5 +628,20 @@ class ApiDataController extends Controller
         ]);
     }
 
+    public function new_member_activation(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->status = $request->get('status');
+        $user->save();
+
+        try{
+            return response()->json([
+                'message' => $user->username.' berhasil di aktivasi',
+                'data' => $user
+            ]);
+        }catch(\Exception $e){
+            echo "Member gagal di aktivasi $e.";
+        }
+    }
 
 }

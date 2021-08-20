@@ -33,6 +33,11 @@ Route::post('/member/update/avatar/{id}', [ApiDataController::class, 'update_ava
 Route::post('/member/update/cover/{id}', [ApiDataController::class, 'update_cover']);
 Route::put('/member/update/{id}', [ApiDataController::class, 'profile_member_update']);
 
+
+// Aktivation member
+Route::put('/member/activated/{id}', [ApiDataController::class, 'new_member_activation']);
+
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
