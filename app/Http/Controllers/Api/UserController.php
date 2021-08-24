@@ -1,5 +1,5 @@
 <?php
-// login api 
+// login api
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Member;
 use Validator;
 
 class UserController extends Controller
@@ -56,22 +57,41 @@ class UserController extends Controller
         }
 
         $user = User::where('username', $request->username)->first();
+        $user_id = $user->id;
+        $member = Member::where('user_id', $user_id)->first();
+
+
+
+        $sponsor = User::where('id', $member->sponsor_id)->first();
+
+        //  return response()->json([
+        //     'sponsor' => $sponsor
+        // ]);
 
         if (!$user || !Hash::check($request->password, $user->password)) {
+
             return response()->json([
                 'success' => false,
-                'message' => 'Login Failed!',
+                'message' => 'Login Failed! / Username atau password yang anda masukan tidak sesuai',
             ]);
+        }else{
+            if($user->status === "INACTIVE"){
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Status member anda belum di aktivasi oleh pihak sponsor, coba hubungi pihak sponsor anda.',
+                    'data' => $user,
+                    'sponsor' => $sponsor
+                ]);
+            }
+            return response()->json([
+                'success' => true,
+                'message' => 'Login Success!',
+                'data'    => $user,
+                'token'   => $user->createToken('authToken')->accessToken
+            ], 201);
         }
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Login Success!',
-            'data'    => $user,
-            'token'   => $user->createToken('authToken')->accessToken    
-        ]);
     }
-    
+
     /**
      * logout
      *
@@ -85,7 +105,7 @@ class UserController extends Controller
         if($removeToken) {
             return response()->json([
                 'success' => true,
-                'message' => 'Logout Success!',  
+                'message' => 'Logout Success!',
             ]);
         }
     }
@@ -96,6 +116,6 @@ class UserController extends Controller
         return response()->json(['success' => $user], $this->successStatus);
     }
 
-    
-    
+
+
 }
