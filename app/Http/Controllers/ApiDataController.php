@@ -12,6 +12,7 @@ use App\Models\Product;
 use App\Models\CategoryMessage;
 use App\Models\Contact;
 use App\Models\Event;
+use Twilio\Rest\Client;
 
 use Validator;
 use Auth;
@@ -426,6 +427,7 @@ class ApiDataController extends Controller
         $members = User::join('profile', 'profile.user_id', '=', 'users.id')
                     ->where('roles', '=', json_encode(['MEMBER']))
                     ->whereIn('users.id', [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18])
+                    ->orderBy('achievements', 'DESC')
                     // ->get();
                     ->paginate(6);
 
@@ -642,6 +644,67 @@ class ApiDataController extends Controller
         }catch(\Exception $e){
             echo "Member gagal di aktivasi $e.";
         }
+    }
+
+    public function sendMessage(Request $request)
+    {
+        $recipients = $request->get('recipients');
+        $message = $request->get('message');
+        // return response()->json([
+        //     'data' => [
+        //         'number' => $recipients,
+        //         'message' => $message
+        //     ]
+        // ]);
+
+        try{
+            $account_sid = getenv("TWILIO_SID");
+            $auth_token = getenv("TWILIO_AUTH_TOKEN");
+            $twilio_number = getenv("TWILIO_NUMBER");
+
+            $client = new Client($account_sid, $auth_token);
+            $client->message->create($recipients, ['from' => $twilio_number, 'body' => $message]);
+            return response()->json([
+                'success' => true,
+                'message' => 'SMS has a sending'
+            ]);
+        }catch(Exception $e){
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 400);
+        }
+    }
+
+    public function getYoutubeChannel($channel_id)
+    {
+        $part = 'snippet,contentDetails,statistics';
+        $api_key = 'AIzaSyBVnOyEii1WdvQQjJzIDTgoBCqr_t8y4fc';
+        $api = 'https://www.googleapis.com/youtube/v3/channels?part='.$part.'&id='.$channel_id.'&key='.$api_key;
+
+
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $api);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        $result = curl_exec($curl);
+        curl_close($curl);
+
+        $data = json_decode($result, 1);
+
+        // var_dump($data); die;
+
+        try{
+            return response()->json([
+                'success' => true,
+                'message' => 'Success fetch youtube data',
+                'data' => $data
+            ]);
+        }catch(Exception $e){
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 400);
+        }
+
     }
 
 }

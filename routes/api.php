@@ -38,6 +38,12 @@ Route::put('/member/update/{id}', [ApiDataController::class, 'profile_member_upd
 Route::put('/member/activated/{id}', [ApiDataController::class, 'new_member_activation']);
 
 
+// Kirim sms
+Route::get('/kirim-sms', [ApiDataController::class, 'sendMessage']);
+
+
+// Youtube channel
+Route::get('/evoush/youtube/{channel_id}', [ApiDataController::class, 'getYoutubeChannel']);
 /*
 |--------------------------------------------------------------------------
 | API Routes
