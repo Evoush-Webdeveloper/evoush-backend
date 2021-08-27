@@ -682,7 +682,6 @@ class ApiDataController extends Controller
         $api_key = 'AIzaSyBVnOyEii1WdvQQjJzIDTgoBCqr_t8y4fc';
         $api = 'https://www.googleapis.com/youtube/v3/channels?part='.$part.'&id='.$channel_id.'&key='.$api_key;
 
-
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $api);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
