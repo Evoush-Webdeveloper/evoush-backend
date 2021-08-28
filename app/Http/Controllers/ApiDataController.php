@@ -426,7 +426,7 @@ class ApiDataController extends Controller
     {
         $members = User::join('profile', 'profile.user_id', '=', 'users.id')
                     ->where('roles', '=', json_encode(['MEMBER']))
-                    ->whereIn('users.id', [3, 5, 4, 10, 7, 8, 9, 11, 12, 13, 14, 15, 16, 18, 19])
+                    ->whereIn('users.id', [3, 5, 4, 7, 8, 9, 11, 12, 13, 14, 15, 16, 18, 19])
                     ->orderBy('achievements', 'DESC')
                     // ->get();
                     ->paginate(6);
