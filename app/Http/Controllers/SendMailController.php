@@ -16,8 +16,10 @@ class SendMailController extends Controller
     {
         $validation = Validator::make($request->all(),[
          "name" => "required|min:5|max:100",
-         "phone" => "required|digits_between:10,15",
+         "phone" => "required|max:20",
          "email" => "required|email",
+         "province" => "required",
+         "city" => "required",
          "message" => "required"
         ]);
 
@@ -61,7 +63,7 @@ class SendMailController extends Controller
 
 
             $details = [
-                'title' => 'Contact From Website evoush::official',
+                'title' => 'Email From Website evoush::official',
                 'url' => 'https://evoush.com',
                 'name' => $name,
                 'email' => $email,
