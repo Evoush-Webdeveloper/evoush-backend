@@ -429,7 +429,7 @@ class ApiDataController extends Controller
                     ->whereIn('users.id', [3, 5, 4, 7, 8, 9, 11, 12, 13, 14, 15, 16, 18, 19])
                     ->orderBy('achievements', 'DESC')
                     // ->get();
-                    ->paginate(6);
+                    ->paginate(9);
 
         // return response()->json([
         //     'success' => true,
