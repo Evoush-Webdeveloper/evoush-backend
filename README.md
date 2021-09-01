@@ -28,9 +28,9 @@ backend : <a href="https://app.evoush.com">Evoush Backend</a>
 
 ### Migration Server to Heroku  
 
-Setup server on heroku : 
+Configure server on heroku : 
 
-##### .user.ini (Custome for php in server)  
+##### .user.ini (Custome for php at server)  
 ```bash
 upload_max_filesize=100M
 post_max_size=100M
@@ -48,5 +48,5 @@ RewriteRule (.*) public/$1 [L]
 
 #### Dont Forget  
 
-***Adding Env In Heroku*** 
-***Database : postgresql***
+Using AddOn Postgresql heroku s3 server  
+Deploy setup Environment rules in heroku
