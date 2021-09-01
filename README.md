@@ -22,3 +22,31 @@ backend : <a href="https://app.evoush.com">Evoush Backend</a>
 
 **Sample Rest Post Method**  
 <img src="https://raw.githubusercontent.com/codesyariah122/evoush-website/new_evoush_branch/sample_post_method_api.jpg">
+
+
+
+
+### Migration Server to Heroku  
+
+Setup server on heroku : 
+
+##### .user.ini (Custome for php in server)  
+```bash
+upload_max_filesize=100M
+post_max_size=100M
+```
+
+##### .htaccess  
+
+```bash
+<IfModule mod_rewrite.c>
+RewriteEngine on
+RewriteRule ^$ public/ [L]
+RewriteRule (.*) public/$1 [L]
+</IfModule>
+```
+
+#### Dont Forget  
+
+***Adding Env In Heroku*** 
+***Database : postgresql***
