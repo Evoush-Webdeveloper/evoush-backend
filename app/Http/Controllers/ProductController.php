@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Traits\ImageUpload;
 use Illuminate\Validation\Rule;
 use App\Models\User;
+use Validator;
 use Auth;
 
 class ProductController extends Controller
@@ -72,16 +73,17 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+      // var_dump($request->all()); die;
       $new_product = new \App\Models\Product;
 
-        \Validator::make($request->all(), [
+        Validator::make($request->all(), [
            "title" => "required|min:5|max:200",
            "description" => "required|min:20|max:1000",
            "mini_description" => "required|min:20|max:100",
            "price" => "required|digits_between:0,10",
            "stock" => "required|digits_between:0,10",
            "cover" => "required"
-       ])->validate();
+       ]);
 
         $new_product->title = $request->get('title');
         $new_product->description = $request->get('description');
@@ -95,27 +97,30 @@ class ProductController extends Controller
            $cover_path = $cover->store('product-covers', 'public');
            $new_product->cover = $cover_path;
         }
+        $new_product->slug = \Str::slug($request->get('title'));
+        $new_product->created_by = \Auth::user()->id;
+        $new_product->save();
+        $new_product->categories()->attach($request->get('categories'));
+
+
         if($request->hasFile('slider')) {
           foreach($request->file('slider') as $file)
           {
             $name = $file->getClientOriginalName();
-            if($product->slider && file_exists(storage_path('app/public/' .
-                    $product->slider))){
-                     \Storage::delete('public/'. $product->slider);
+            if($new_product->slider && file_exists(storage_path('app/public/' .
+                    $new_product->slider))){
+                     \Storage::delete('public/'. $new_product->slider);
             }
 
             $file->move(public_path('storage').'/product-sliders/', $name);
             // $file->store('product-sliders', 'public', $name);
             $imgData[] = $name;
           }
-
-          $product->slider = json_encode($imgData);
+          // var_dump($imgData); die;
+          $new_product->slider = json_encode($imgData);
 
         }
-        $new_product->slug = \Str::slug($request->get('title'));
-        $new_product->created_by = \Auth::user()->id;
-        $new_product->save();
-        $new_product->categories()->attach($request->get('categories'));
+
         if($request->get('save_action') == 'PUBLISH'){
            return redirect()
            ->route('products.create')
