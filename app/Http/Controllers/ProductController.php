@@ -173,17 +173,17 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $product = \App\Models\Product::findOrFail($id);
-       //  \Validator::make($request->all(), [
-       //     "title" => "required|min:5|max:200",
-       //     "slug" => [
-       //         "required",
-       //         Rule::unique("products")->ignore($product->slug, "slug")
-       //     ],
-       //     "description" => "required|min:20|max:1000",
-       //     "mini_description" => "required|min:20|max:100",
-       //     "price" => "required|digits_between:0,10",
-       //     "stock" => "required|digits_between:0,10",
-       // ])->validate();
+        \Validator::make($request->all(), [
+           "title" => "required|min:5|max:200",
+           "slug" => [
+               "required",
+               Rule::unique("products")->ignore($product->slug, "slug")
+           ],
+           "description" => "required|min:20|max:1000",
+           "mini_description" => "required|min:20|max:100",
+           "price" => "required|digits_between:0,10",
+           "stock" => "required|digits_between:0,10",
+       ]);
 
 
         $product->title = $request->get('title');
@@ -205,15 +205,16 @@ class ProductController extends Controller
         if($request->hasFile('slider')) {
           foreach($request->file('slider') as $file)
           {
-            $name = $file->getClientOriginalName();
+            $unique_name = md5($file. time());
+            // $name = $file->getClientOriginalName();
             if($product->slider && file_exists(storage_path('app/public/' .
                     $product->slider))){
                      \Storage::delete('public/'. $product->slider);
             }
 
-            $file->move(public_path('storage').'/product-sliders/', $name);
+            $file->move(public_path('storage').'/product-sliders/', $unique_name);
             // $file->store('product-sliders', 'public', $name);
-            $imgData[] = $name;
+            $imgData[] = $unique_name;
           }
 
           $product->slider = json_encode($imgData);
