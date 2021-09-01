@@ -103,25 +103,23 @@ class ProductController extends Controller
         $new_product->categories()->attach($request->get('categories'));
 
 
-        if($request->hasFile('slider')) {
+       if($request->hasFile('slider')) {
+
           foreach($request->file('slider') as $file)
           {
-            $name = $file->getClientOriginalName();
-            if($new_product->slider && file_exists(storage_path('app/public/' .
-                    $new_product->slider))){
-                     \Storage::delete('public/'. $new_product->slider);
-            }
-
+            $name = time().rand(1,100).'.'.$file->extension();
+            // $unique_name = md5($file. time());
             $file->move(public_path('storage').'/product-sliders/', $name);
-            // $file->store('product-sliders', 'public', $name);
-            $imgData[] = $name;
+            $files[] = $name;
           }
-          // var_dump($imgData); die;
-          $new_product->slider = json_encode($imgData);
 
+          $new_product->slider = json_encode($files);
+
+          // var_dump($new_product->slider); die;
         }
 
         if($request->get('save_action') == 'PUBLISH'){
+          $new_product->save();
            return redirect()
            ->route('products.create')
            ->with('status', 'New Product With id : '.$new_product->id.' successfully saved and published');
