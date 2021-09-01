@@ -107,10 +107,10 @@ class ProductController extends Controller
 
           foreach($request->file('slider') as $file)
           {
-            $name = time().rand(1,100).'.'.$file->extension();
-            // $unique_name = md5($file. time());
-            $file->move(public_path('storage').'/product-sliders/', $name);
-            $files[] = $name;
+            // $name = time().rand(1,100).'.'.$file->extension();
+            $unique_name = md5($file. time());
+            $file->move(public_path('storage').'/product-sliders/', $unique_name);
+            $files[] = $unique_name;
           }
 
           $new_product->slider = json_encode($files);
