@@ -221,7 +221,7 @@ class ApiDataController extends Controller
         $keyword = $request->segment(4);
 
         $profiles = User::join('profile', 'users.id', '=', 'profile.user_id')
-        ->where("name", "LIKE", "%$keyword%")
+        ->where("username", "LIKE", "%$keyword%")
         ->get(['profile.*', 'users.*']);
         return json_decode($profiles);
     }

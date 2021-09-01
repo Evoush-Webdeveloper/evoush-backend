@@ -73,7 +73,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
       $new_product = new \App\Models\Product;
-        
+
         \Validator::make($request->all(), [
            "title" => "required|min:5|max:200",
            "description" => "required|min:20|max:1000",
@@ -81,7 +81,7 @@ class ProductController extends Controller
            "price" => "required|digits_between:0,10",
            "stock" => "required|digits_between:0,10",
            "cover" => "required"
-       ])->validate(); 
+       ])->validate();
 
         $new_product->title = $request->get('title');
         $new_product->description = $request->get('description');
@@ -94,6 +94,23 @@ class ProductController extends Controller
         if($cover){
            $cover_path = $cover->store('product-covers', 'public');
            $new_product->cover = $cover_path;
+        }
+        if($request->hasFile('slider')) {
+          foreach($request->file('slider') as $file)
+          {
+            $name = $file->getClientOriginalName();
+            if($product->slider && file_exists(storage_path('app/public/' .
+                    $product->slider))){
+                     \Storage::delete('public/'. $product->slider);
+            }
+
+            $file->move(public_path('storage').'/product-sliders/', $name);
+            // $file->store('product-sliders', 'public', $name);
+            $imgData[] = $name;
+          }
+
+          $product->slider = json_encode($imgData);
+
         }
         $new_product->slug = \Str::slug($request->get('title'));
         $new_product->created_by = \Auth::user()->id;
@@ -161,7 +178,7 @@ class ProductController extends Controller
        //     "mini_description" => "required|min:20|max:100",
        //     "price" => "required|digits_between:0,10",
        //     "stock" => "required|digits_between:0,10",
-       // ])->validate(); 
+       // ])->validate();
 
 
         $product->title = $request->get('title');
@@ -189,9 +206,9 @@ class ProductController extends Controller
                      \Storage::delete('public/'. $product->slider);
             }
 
-            $file->move(public_path('storage').'/product-sliders/', $name); 
+            $file->move(public_path('storage').'/product-sliders/', $name);
             // $file->store('product-sliders', 'public', $name);
-            $imgData[] = $name;  
+            $imgData[] = $name;
           }
 
           $product->slider = json_encode($imgData);
