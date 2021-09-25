@@ -17,7 +17,7 @@ class CreateKonsultasisTable extends Migration
             $table->id();
             $table->string('fullname');
             $table->string('phone');
-            $table->string('message');
+            $table->string('message')->nullable();
             $table->timestamps();
         });
     }
