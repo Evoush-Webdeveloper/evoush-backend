@@ -129,7 +129,7 @@ class KonsultasiDokter extends Controller
     {
         //
         $consult = Konsultasi::findOrFail($id);
-        $send_to_dokter = "Hallo%20Dokter%20Winda,%20Silahkan%20Buka%20Aplikasi%20Chat%20Crisp%20salah%20satu%20member%20evoush,%20".$consult->fullname."%20. Dengan%20username%20:%20".$consult->username."%20Ingin%20berkonsultasi%20dengan%20Dokter.";
+        $send_to_dokter = "Hallo%20Dokter%20Winda,%20Silahkan%20Buka%20Aplikasi%20Chat%20Crisp%20Anda%20, salah%20satu%20member%20evoush,%20".$consult->fullname."%20.%20Dengan%20username%20:%20".$consult->username."%20Ingin%20berkonsultasi%20dengan%20Dokter.";
          $context = [
             'title' => 'Detail Konsultasi',
             'brand' => 'evoush',
