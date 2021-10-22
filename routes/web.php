@@ -58,7 +58,6 @@ Route::match(["GET", "POST"], "/register", function(){
 
 // test email
 Route::get('/dashboard/evoush/kirim-email', [SendMailController::class, 'send']);
-
 // dashboard/evoush Management Route
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -147,3 +146,33 @@ Route::resource('/dashboard/evoush/delivers', DeliveryConsultController::class);
 Route::post('/consult/update', [ApiDataController::class, 'deliver_to_docter']);
 
 
+// Config Clear in Shared Hosting
+Route::get('/config-clear', function() {
+    Artisan::call('config:clear');
+    // Do whatever you want either a print a message or exit
+    echo "Config has clear";
+});
+
+Route::get('/config-cache', function() {
+    Artisan::call('config:cache');
+    // Do whatever you want either a print a message or exit
+    echo "Config cache has clear";
+});
+
+Route::get('/cache-clear', function() {
+    Artisan::call('cache:clear');
+    // Do whatever you want either print a message or exit
+    echo "Cache has been clear";
+});
+
+Route::get('/view-clear', function() {
+    Artisan::call('view:clear');
+    // Do whatever you want either print a message or exit
+    echo "View cache has been clear";
+});
+
+Route::get('/route-cache', function() {
+    Artisan::call('route:clear');
+    // Do whatever you want either print a message or exit
+    echo "Route cache has been clear";
+});

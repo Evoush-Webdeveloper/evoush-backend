@@ -26,7 +26,7 @@ class LoginWebReplikaEmail extends Mailable
     public function build()
     {
          return $this->subject('Login Web replika')
-                ->view('dashboard.emails.LoginWebReplikaEmail')
+                ->view('dashboard.users.sendingwebreplika')
                 ->with('details', $this->details);
     }
 }
