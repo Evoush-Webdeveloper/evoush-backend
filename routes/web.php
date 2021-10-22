@@ -76,6 +76,8 @@ Route::get('/dashboard/evoush/kirim-email', [SendMailController::class, 'send'])
 Route::get('/dashboard/evoush', [DashboardController::class, 'index'])->name('dashboard.evoush');
 // User Data Route
 Route::resource('/dashboard/evoush/users', UserController::class);
+Route::get('/dashboard/evoush/users/send/email/{id}', [UserController::class, 'send_information'])->name('send.email');
+Route::post('/dashboard/evoush/sending/email', [UserController::class, 'sending_email'])->name('sending.email.member');
 // Route Profile dashboard/evoush
 // Route::get('/dashboard/evoush/profile/{username}', ProfileController::class, 'show_profile')->name('profile.username');
 Route::resource('/dashboard/evoush/profile', ProfileController::class);
