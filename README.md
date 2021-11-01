@@ -2,6 +2,9 @@
 Evoush backend ini dibangun di atas bahasa pemrogramman PHP7 dan kali ini untuk build system keseluruhan di gunakan framework Laravel8 sebagai backend system untuk managerial data bagi kebutuhan front end website.  
 backend : <a href="https://app.evoush.com">Evoush Backend</a>  
 
+##### Example Screen  
+[Testing Join]('/screen_example/testing_join.jpg')  
+
 ### Evoush all the technology used
 * Front End
     - WebPack
